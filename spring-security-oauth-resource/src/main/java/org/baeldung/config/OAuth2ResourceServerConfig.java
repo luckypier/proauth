@@ -29,18 +29,25 @@ public class OAuth2ResourceServerConfig extends ResourceServerConfigurerAdapter 
     @Override
     public void configure(final HttpSecurity http) throws Exception {
         // @formatter:off
-        http
-            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
-            .and()
-            .requestMatchers().antMatchers("/foos/**","/bars/**")
-            .and()
-            .authorizeRequests()
-                .antMatchers(HttpMethod.GET,"/foos/**").access("#oauth2.hasScope('foo') and #oauth2.hasScope('read')")
-                .antMatchers(HttpMethod.POST,"/foos/**").access("#oauth2.hasScope('foo') and #oauth2.hasScope('write')")
-                .antMatchers(HttpMethod.GET,"/bars/**").access("#oauth2.hasScope('bar') and #oauth2.hasScope('read')")
-                .antMatchers(HttpMethod.POST,"/bars/**").access("#oauth2.hasScope('bar') and #oauth2.hasScope('write') and hasRole('ROLE_ADMIN')")
-            ;
+//        http
+//            .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+//            .and()
+//            .requestMatchers().antMatchers("/foos/**","/bars/**")
+//            .and()
+//            .authorizeRequests()
+//                .antMatchers(HttpMethod.GET,"/foos/**").access("#oauth2.hasScope('foo') and #oauth2.hasScope('read')")
+//                .antMatchers(HttpMethod.POST,"/foos/**").access("#oauth2.hasScope('foo') and #oauth2.hasScope('write')")
+//                .antMatchers(HttpMethod.GET,"/bars/**").access("#oauth2.hasScope('bar') and #oauth2.hasScope('read')")
+//                .antMatchers(HttpMethod.POST,"/bars/**").access("#oauth2.hasScope('bar') and #oauth2.hasScope('write') and hasRole('ROLE_ADMIN')")
+//            ;
         // @formatter:on
+        
+    	//FOR AUTHENTICATED URL'S
+    	http.authorizeRequests().antMatchers("/foos/**", "/bars/**").authenticated();
+    	
+    	//NON AUTHENTICATED URL'S (not necesary to declare) /dummy/{id}
+    	
+    	
     }
 
     @Bean
