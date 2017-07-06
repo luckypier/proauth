@@ -15,6 +15,9 @@ import org.springframework.jdbc.datasource.init.DataSourceInitializer;
 import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -30,6 +33,12 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
 
     @Autowired
     private Environment env;
+    
+    //NEW>>>>>>>>>>>>>>>>>>>>>>>>>
+    @Autowired
+	@Qualifier("primeUserDetailsService")
+	private UserDetailsService userDetailsService;
+    //NEW<<<<<<<<<<<<<<<<<<<<<<<<<
 
     @Autowired
     @Qualifier("authenticationManagerBean")
@@ -39,6 +48,13 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
     private Resource schemaScript;
 
     //
+    
+	//NEW>>>>>>>>>>>>>>>>>>>>>>>>>
+    @Bean
+	public PasswordEncoder passwordEncoder() {
+		return new BCryptPasswordEncoder();
+	}
+	//NEW<<<<<<<<<<<<<<<<<<<<<<<<<
 
     @Override
     public void configure(final AuthorizationServerSecurityConfigurer oauthServer) throws Exception {
@@ -74,7 +90,11 @@ public class OAuth2AuthorizationServerConfig extends AuthorizationServerConfigur
 
     @Override
     public void configure(final AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
-        endpoints.tokenStore(tokenStore()).authenticationManager(authenticationManager);
+        endpoints
+        	.tokenStore(tokenStore())
+        	.authenticationManager(authenticationManager);
+        
+        endpoints.userDetailsService(userDetailsService);
     }
 
     @Bean
