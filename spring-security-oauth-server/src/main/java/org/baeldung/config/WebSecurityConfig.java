@@ -37,15 +37,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
   @Override
   protected void configure(final AuthenticationManagerBuilder auth) throws Exception {// @formatter:off
-      auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
+      auth
+      	.userDetailsService(userDetailsService);
+//      	.passwordEncoder(passwordEncoder);
   }// @formatter:on
   
   
-//  @Override
-//  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//      auth.userDetailsService(userDetailsServiceBean());
-//  }
-
   @Override
   public UserDetailsService userDetailsServiceBean() throws Exception {
       return userDetailsService;

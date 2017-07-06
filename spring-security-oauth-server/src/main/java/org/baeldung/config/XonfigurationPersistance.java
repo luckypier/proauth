@@ -1,5 +1,7 @@
 package org.baeldung.config;
 
+import org.baeldung.userdb.CustomerModel;
+import org.baeldung.userdb.CustomerRepository;
 import org.baeldung.userdb.User;
 import org.baeldung.userdb.UserRepository;
 import org.baeldung.userdb.UserService;
@@ -16,10 +18,10 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 	})
 @EnableJpaRepositories(basePackageClasses = 
 	{
-		UserRepository.class
+		UserRepository.class, CustomerRepository.class
 	})
 @EntityScan(basePackageClasses = {
-		User.class
+		User.class, CustomerModel.class
 	})
 public class XonfigurationPersistance {
 

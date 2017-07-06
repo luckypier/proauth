@@ -9,13 +9,18 @@ import org.springframework.stereotype.Service;
 @Service("primeUserDetailsService")
 public class UserService implements UserDetailsService {
 	
+//	@Autowired
+//	private UserRepository userRepository;
+	
 	@Autowired
-	private UserRepository userRepository;
+	private CustomerRepository customerRepository;
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		UserDetails UD = userRepository.findOneByUsername(username);
+//		UserDetails UD = userRepository.findOneByUsername(username);
+		
+		UserDetails UD = customerRepository.findOneByDni(username);
 		
 		System.out.println(">>>>>>>>>>>>>>>>>>>>>>>>>>>"+UD.getUsername());
 		

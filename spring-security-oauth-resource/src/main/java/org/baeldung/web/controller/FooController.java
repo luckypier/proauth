@@ -5,6 +5,7 @@ import static org.apache.commons.lang3.RandomStringUtils.randomNumeric;
 
 import org.baeldung.web.dto.Foo;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,7 +25,7 @@ public class FooController {
     // @PreAuthorize("#oauth2.hasScope('foo') and #oauth2.hasScope('read')")
     @RequestMapping(method = RequestMethod.GET, value = "/foos/{id}")
     @ResponseBody
-    public Foo findById(@PathVariable final long id) {
+    public Foo findById(Authentication authentication, @PathVariable final long id) {
         return new Foo(Long.parseLong(randomNumeric(2)), randomAlphabetic(4));
     }
 
