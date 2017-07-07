@@ -40,7 +40,15 @@
             <artifactId>spring-security-oauth2</artifactId>
             <version>${oauth.version}</version>
         </dependency>
-
+        
+        <!-- from resource -->
+        
+        <dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+			<version>${commons-lang3.version}</version>
+		</dependency>
+	
     </dependencies>
 
     <build>
@@ -58,5 +66,9 @@
             </plugin>
         </plugins>
     </build>
+    
+    <properties>
+        <commons-lang3.version>3.3.2</commons-lang3.version>
+   </properties>
 
 </project>
